@@ -117,9 +117,22 @@ function movePlayer(){
     });
 
     if (enemyCollision) {
-        levelFail();
+        showCollision()
+        setTimeout(levelFail, 2000);
     }
     game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y);
+}
+function showCollision() {
+    game.clearRect(0, 0, canvasSize, canvasSize);
+    game.font = '10px Verdana';
+    game.textAlign = 'center';
+    if(lives > 1) {
+        game.fillText(emojis['BOMB_COLLISION'], canvasSize/2, canvasSize/2);
+    }
+    else {
+        game.fillText(emojis['GAME_OVER'], canvasSize/2, canvasSize/2);
+        console.log('perdiste todas las vidas')
+    } 
 }
 
 function levelWin(){
@@ -147,7 +160,7 @@ function gameWin(){
     console.log('terminaste el juego');
     clearInterval(timeInterval);
 
-
+    game.fillText(emojis['WIN'],canvasSize/2, canvasSize/2);
 
     const recordTime = localStorage.getItem('record_time');
     const playerTime = Date.now() - timeStart;
